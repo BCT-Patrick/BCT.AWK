@@ -1,0 +1,31 @@
+name: BCT.AWK.Converter
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -c Release
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Publish Converter
+      run: dotnet publish Converter/BCT.AWK.Converter.csproj  -c Release -o release/converter
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4.1.0
+      with:
+       name: BCT.AWK.Converter_${{github.run_number}}
+       path: release/converter
