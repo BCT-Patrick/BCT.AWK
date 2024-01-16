@@ -9,9 +9,9 @@ namespace BCT.AWK.Converter.Import
 {
     internal class ExcelImportRepository : IImportRepository
     {
-        private readonly ConverterKonfiguration _konfiguration;
+        private readonly ImportKonfiguration _konfiguration;
 
-        public ExcelImportRepository(ConverterKonfiguration konfiguration)
+        public ExcelImportRepository(ImportKonfiguration konfiguration)
         {
             _konfiguration = konfiguration;
         }
@@ -57,7 +57,7 @@ namespace BCT.AWK.Converter.Import
             return anwesenheiten;
         }
 
-        private bool GetAnwesenheit(string? anwesenheit)
+        private static bool GetAnwesenheit(string? anwesenheit)
         {
             if (string.IsNullOrWhiteSpace(anwesenheit))
             {
@@ -108,7 +108,7 @@ namespace BCT.AWK.Converter.Import
             return teilnehmer;
         }
 
-        private Training.TrainingsTyp GetArt(string artString)
+        private static Training.TrainingsTyp GetArt(string artString)
         {
             if (Enum.TryParse(artString.Trim(), true, out Training.TrainingsTyp art))
             {

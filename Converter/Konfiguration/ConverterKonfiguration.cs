@@ -1,4 +1,6 @@
 ﻿using System;
+using BCT.AWK.Converter.Export;
+using BCT.AWK.Converter.Import;
 
 namespace BCT.AWK.Converter.Konfiguration
 {
@@ -6,19 +8,16 @@ namespace BCT.AWK.Converter.Konfiguration
     {
         public ConverterKonfiguration()
         {
-            Training = new();
-            Teilnemer = new();
+            Import = new();
+            Export = new();
         }
 
-        public string AwkFile { get; set; } = "Anwesenheitskontrolle.xlsx";
-        public string AwkBaltt { get; set; } = "AWK";
-
-        public TrainingKonfiguration Training { get; set; }
-        public TeilnehmerKonfiguration Teilnemer { get; set; }
+        public ImportKonfiguration Import { get; set; }
+        public ExportKonfiguration Export { get; set; }
 
         public override string ToString()
         {
-            string s = string.Join(Environment.NewLine, "Converter Konfiguration", AwkFile, AwkBaltt, Training, Teilnemer);
+            string s = string.Join(Environment.NewLine, "Converter Konfiguration", Import, Export);
             return s;
         }
     }

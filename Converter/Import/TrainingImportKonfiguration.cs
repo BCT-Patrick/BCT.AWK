@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BCT.AWK.Converter.Konfiguration
+namespace BCT.AWK.Converter.Import
 {
-    internal class TrainingKonfiguration
+    internal class TrainingImportKonfiguration
     {
         public int ErsteTrainingSpalte { get; set; } = 8;
         public int LetzteTrainingSpalte { get; set; } = 17;
@@ -22,7 +22,7 @@ namespace BCT.AWK.Converter.Konfiguration
             string dauerZeile = $"{nameof(DauerZeile)}= {DauerZeile}";
             string ortZeile = $"{nameof(OrtZeile)}= {OrtZeile}";
 
-            string separator = $"{Environment.NewLine}\t";
+            string separator = $"{Environment.NewLine}\t\t";
             string s = string.Join(separator, "Training Konfiguration:", ersteTrainingSpalte, letzteTrainingSpalte, artZeile, datumZeile, zeitZeile, dauerZeile, ortZeile);
             return s;
         }

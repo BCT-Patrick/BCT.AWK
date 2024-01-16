@@ -8,28 +8,32 @@ using System.IO;
 
 namespace BCT.AWK.Converter
 {
-    internal class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Konfiguration");
+            Console.WriteLine("Konfiguration Laden");
             ConverterKonfiguration konfiguration = GetKonfiguration();
             Console.WriteLine(konfiguration);
             Console.WriteLine();
 
-            Console.WriteLine("Anwesenheiten");
-            List<Anwesenheit> anwesenheiten = GetAnwesenheiten(konfiguration);
+            Console.WriteLine("Excel Importieren");
+            List<Anwesenheit> anwesenheiten = GetAnwesenheiten(konfiguration.Import);
+            Console.WriteLine($"Anwesenheiten ({anwesenheiten.Count}):");
             string anwesenheitenString = String.Join(Environment.NewLine, anwesenheiten);
             Console.WriteLine(anwesenheitenString);
             Console.WriteLine();
 
-            AnwesenheitenExportieren(anwesenheiten);
+            Console.WriteLine("CSV Exportieren");
+            int exportiert = AnwesenheitenExportieren(anwesenheiten, konfiguration.Export);
+            Console.WriteLine($"{exportiert} Anwesenheiten exportiert");
         }
 
-        private static void AnwesenheitenExportieren(IEnumerable<Anwesenheit> anwesenheiten)
+        private static int AnwesenheitenExportieren(IEnumerable<Anwesenheit> anwesenheiten, ExportKonfiguration konfiguration)
         {
-            CsvExportRepository csvExportRepository = new CsvExportRepository();
-            csvExportRepository.Export(anwesenheiten);
+            CsvExportRepository csvExportRepository = new(konfiguration);
+            int exportiert = csvExportRepository.Export(anwesenheiten);
+            return exportiert;
         }
 
         private static ConverterKonfiguration GetKonfiguration()
@@ -40,7 +44,7 @@ namespace BCT.AWK.Converter
             bool konfigurationExistiert = konfigurationRepository.Existiert();
             if (konfigurationExistiert)
             {
-                ConverterKonfiguration konfiguration = konfigurationRepository.Laden();
+                ConverterKonfiguration? konfiguration = konfigurationRepository.Laden();
                 if (konfiguration != null)
                 {
                     return konfiguration;
@@ -57,11 +61,11 @@ namespace BCT.AWK.Converter
             string ordner = Directory.GetCurrentDirectory();
             string file = nameof(ConverterKonfiguration) + ".json";
             string filePath = Path.Combine(ordner, file);
-            FileInfo konfigurationFile = new FileInfo(filePath);
+            FileInfo konfigurationFile = new(filePath);
             return konfigurationFile;
         }
 
-        private static List<Anwesenheit> GetAnwesenheiten(ConverterKonfiguration konfiguration)
+        private static List<Anwesenheit> GetAnwesenheiten(ImportKonfiguration konfiguration)
         {
             ExcelImportRepository konfigurationRepository = new(konfiguration);
             List<Anwesenheit> anwesenheiten = konfigurationRepository.Laden();

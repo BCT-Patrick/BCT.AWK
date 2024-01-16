@@ -7,27 +7,41 @@ namespace BCT.AWK.Converter.Export
 {
     internal class CsvExportRepository : IExportRepository
     {
-        public void Export(IEnumerable<Anwesenheit> anwesenheiten)
+        private readonly ExportKonfiguration _exportKonfiguration;
+
+        public CsvExportRepository(ExportKonfiguration exportKonfiguration)
+        {
+            _exportKonfiguration = exportKonfiguration;
+        }
+
+        public int Export(IEnumerable<Anwesenheit> anwesenheiten)
         {
             DateTime jetzt = DateTime.Now;
-            FileStreamOptions options = new FileStreamOptions
+            string zeitstempel = jetzt.ToString(_exportKonfiguration.FileZeitstempelFormat);
+            string fileName = $"{_exportKonfiguration.FileName}_{zeitstempel}{_exportKonfiguration.FileExtension}";
+
+            FileStreamOptions options = new()
             {
                 Mode = FileMode.CreateNew,
                 Access = FileAccess.ReadWrite,
                 Share = FileShare.Read
             };
-            using StreamWriter writer = new($"Anwesenheitskontrolle_{jetzt:yyyy-MM-dd HHmmss}.csv", options);
-            AnwesenheitCsvWriter csvWriter = new(writer, ",");
+
+            using StreamWriter writer = new(fileName, options);
+            AnwesenheitCsvWriter csvWriter = new(writer, _exportKonfiguration.Separator);
 
             csvWriter.WriteKopfZeile();
 
+            int exportiert = 0;
             foreach (Anwesenheit anwesenheit in anwesenheiten)
             {
                 if (anwesenheit.Anwesend)
                 {
                     csvWriter.WriteZeile(anwesenheit);
+                    exportiert++;
                 }
             }
+            return exportiert;
         }
     }
 }

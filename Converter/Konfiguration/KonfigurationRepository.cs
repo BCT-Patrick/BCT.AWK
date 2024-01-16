@@ -23,7 +23,8 @@ namespace BCT.AWK.Converter.Konfiguration
             FileStreamOptions streamOptions = new()
             {
                 Access = FileAccess.Read,
-                Mode = FileMode.Open
+                Mode = FileMode.Open,
+                Share = FileShare.ReadWrite
             };
 
             using FileStream stream = new(path, streamOptions);
@@ -43,7 +44,8 @@ namespace BCT.AWK.Converter.Konfiguration
             FileStreamOptions options = new()
             {
                 Access = FileAccess.ReadWrite,
-                Mode = FileMode.Create
+                Mode = FileMode.Create,
+                Share = FileShare.Read
             };
 
             using FileStream stream = new(path, options);

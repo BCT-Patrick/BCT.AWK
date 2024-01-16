@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BCT.AWK.Converter.Konfiguration
+namespace BCT.AWK.Converter.Import
 {
-    internal class TeilnehmerKonfiguration
+    internal class TeilnehmerImportKonfiguration
     {
         public int ErsteTeilnehmerZeile { get; set; } = 9;
         public int LetzteTeilnehmerZeile { get; set; } = 28;
@@ -21,7 +21,7 @@ namespace BCT.AWK.Converter.Konfiguration
             string nchNameSpalte = $"{nameof(NachNameSpalte)}= {NachNameSpalte}";
             string geburtstag = $"{nameof(GeburtstagSpalte)}= {GeburtstagSpalte}";
 
-            string separator = $"{Environment.NewLine}\t";
+            string separator = $"{Environment.NewLine}\t\t";
             string s = string.Join(separator, "Teilnehmer Konfiguration:", ersteTeilnehmerZeile, letzteTeilnehmerZeile, nummerSpalte, funktionSpalte, vorNameSpalte, nchNameSpalte, geburtstag);
             return s;
         }

@@ -5,6 +5,6 @@ namespace BCT.AWK.Converter.Export
 {
     internal interface IExportRepository
     {
-        void Export(IEnumerable<Anwesenheit> anwesenheiten);
+        int Export(IEnumerable<Anwesenheit> anwesenheiten);
     }
 }
