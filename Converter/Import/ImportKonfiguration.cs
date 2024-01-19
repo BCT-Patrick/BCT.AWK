@@ -14,7 +14,7 @@ namespace BCT.AWK.Converter.Import
             Teilnemer = new();
         }
 
-        public string AwkFile { get; set; } = "Anwesenheitskontrolle.xlsx";
+        public string AwkPfad { get; set; } = "Awk";
         public string AwkBaltt { get; set; } = "AWK";
 
         public TrainingImportKonfiguration Training { get; set; }
@@ -23,7 +23,7 @@ namespace BCT.AWK.Converter.Import
         public override string ToString()
         {
             string separator = $"{Environment.NewLine}\t";
-            string s = string.Join(separator, "Import Konfiguration", AwkFile, AwkBaltt, Training, Teilnemer);
+            string s = string.Join(separator, "Import Konfiguration", AwkPfad, AwkBaltt, Training, Teilnemer);
             return s;
         }
     }

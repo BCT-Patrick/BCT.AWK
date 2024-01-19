@@ -3,6 +3,7 @@ using BCT.AWK.Converter.Konfiguration;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace BCT.AWK.Converter.Import
@@ -16,9 +17,9 @@ namespace BCT.AWK.Converter.Import
             _konfiguration = konfiguration;
         }
 
-        public List<Anwesenheit> Laden()
+        public List<Anwesenheit> Laden(FileInfo excelFile)
         {
-            FileStream fileStream = new(_konfiguration.AwkFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            FileStream fileStream = new(excelFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ExcelPackage package = new(fileStream);
             ExcelWorksheet worksheet = package.Workbook.Worksheets[_konfiguration.AwkBaltt];
@@ -64,7 +65,11 @@ namespace BCT.AWK.Converter.Import
                 return false;
             }
 
-            if (anwesenheit.Contains("ja", StringComparison.InvariantCultureIgnoreCase) || anwesenheit.Contains("wahr", StringComparison.InvariantCultureIgnoreCase))
+            if (anwesenheit.Equals("ja", StringComparison.InvariantCultureIgnoreCase)
+                || anwesenheit.Equals("true", StringComparison.InvariantCultureIgnoreCase)
+                || anwesenheit.Equals("wahr", StringComparison.InvariantCultureIgnoreCase)
+                || anwesenheit.Equals("x", StringComparison.InvariantCultureIgnoreCase)
+                || anwesenheit.Equals("1", StringComparison.InvariantCultureIgnoreCase))
             {
                 return true;
             }
@@ -135,14 +140,24 @@ namespace BCT.AWK.Converter.Import
                 return null;
             }
 
-            if (value is DateTime dateTime)
+            if (value is DateTime dateTimeValue)
             {
-                return dateTime;
+                return dateTimeValue;
             }
 
-            double dateCell = Convert.ToDouble(value);
-            DateTime date = DateTime.FromOADate(dateCell);
-            return date;
+            if(value is double doubleValue)
+            {
+                DateTime date = DateTime.FromOADate(doubleValue);
+                return date;
+            }
+
+            if(value is string stringValue)
+            {
+                bool isDateTime = DateTime.TryParse(stringValue, CultureInfo.InvariantCulture, out DateTime dateTime);
+                return isDateTime ? dateTime : null;
+            }
+
+            return null;
         }
     }
 }

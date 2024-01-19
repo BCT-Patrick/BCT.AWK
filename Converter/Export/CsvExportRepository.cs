@@ -14,11 +14,11 @@ namespace BCT.AWK.Converter.Export
             _exportKonfiguration = exportKonfiguration;
         }
 
-        public int Export(IEnumerable<Anwesenheit> anwesenheiten)
+        public int Export(IEnumerable<Anwesenheit> anwesenheiten, FileInfo excelFile)
         {
             DateTime jetzt = DateTime.Now;
             string zeitstempel = jetzt.ToString(_exportKonfiguration.FileZeitstempelFormat);
-            string fileName = $"{_exportKonfiguration.FileName}_{zeitstempel}{_exportKonfiguration.FileExtension}";
+            string fileName = $"{excelFile.FullName}_{zeitstempel}{_exportKonfiguration.FileExtension}";
 
             FileStreamOptions options = new()
             {

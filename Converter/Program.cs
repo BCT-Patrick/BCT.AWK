@@ -12,28 +12,74 @@ namespace BCT.AWK.Converter
     {
         static void Main()
         {
-            Console.WriteLine("Konfiguration Laden");
-            ConverterKonfiguration konfiguration = GetKonfiguration();
-            Console.WriteLine(konfiguration);
-            Console.WriteLine();
+            try
+            {
+                Console.WriteLine("Konfiguration Laden");
+                ConverterKonfiguration konfiguration = GetKonfiguration();
+                Console.WriteLine(konfiguration);
+                Console.WriteLine();
 
-            Console.WriteLine("Excel Importieren");
-            List<Anwesenheit> anwesenheiten = GetAnwesenheiten(konfiguration.Import);
-            Console.WriteLine($"Anwesenheiten ({anwesenheiten.Count}):");
-            string anwesenheitenString = String.Join(Environment.NewLine, anwesenheiten);
-            Console.WriteLine(anwesenheitenString);
-            Console.WriteLine();
+                Console.WriteLine("Excel Files Konvertieren");
+                List<FileInfo> excelFiles = GetExcelFiles(konfiguration.Import);
+                Console.WriteLine($"Excel Files ({excelFiles.Count}):");
+                string anwesenheitenString = String.Join(Environment.NewLine, excelFiles);
+                Console.WriteLine(anwesenheitenString);
+                Console.WriteLine();
 
-            Console.WriteLine("CSV Exportieren");
-            int exportiert = AnwesenheitenExportieren(anwesenheiten, konfiguration.Export);
-            Console.WriteLine($"{exportiert} Anwesenheiten exportiert");
+                foreach (FileInfo excelFile in excelFiles)
+                {
+
+                    ExcelFileKonvertieren(excelFile, konfiguration);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unerwarteter Fehler");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("Zum Schliessen eine beliebige Taste drücken...");
+                Console.ReadKey();
+            }
         }
 
-        private static int AnwesenheitenExportieren(IEnumerable<Anwesenheit> anwesenheiten, ExportKonfiguration konfiguration)
+        private static void ExcelFileKonvertieren(FileInfo excelFile, ConverterKonfiguration konfiguration)
         {
-            CsvExportRepository csvExportRepository = new(konfiguration);
-            int exportiert = csvExportRepository.Export(anwesenheiten);
-            return exportiert;
+            try
+            {
+                Console.WriteLine("Excel File: " + excelFile);
+                Console.WriteLine("Excel Importieren");
+                List<Anwesenheit> anwesenheiten = GetAnwesenheiten(excelFile, konfiguration.Import);
+                Console.WriteLine($"Anwesenheiten ({anwesenheiten.Count}):");
+                string anwesenheitenString = String.Join(Environment.NewLine, anwesenheiten);
+                Console.WriteLine(anwesenheitenString);
+                Console.WriteLine();
+
+                Console.WriteLine("CSV Exportieren");
+                int exportiert = AnwesenheitenExportieren(anwesenheiten, excelFile, konfiguration.Export);
+                Console.WriteLine($"{exportiert} Anwesenheiten exportiert");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unerwarteter Fehler");
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private static List<FileInfo> GetExcelFiles(ImportKonfiguration konfiguration)
+        {
+            FileInfo excelFile = new(konfiguration.AwkPfad);
+            if (excelFile.Exists)
+            {
+                return new() { excelFile };
+            }
+
+            DirectoryInfo ordner = new(konfiguration.AwkPfad);
+            if (ordner.Exists)
+            {
+                FileInfo[] excelFiles = ordner.GetFiles("*.xlsx", SearchOption.TopDirectoryOnly);
+                return new(excelFiles);
+            }
+
+            return new();
         }
 
         private static ConverterKonfiguration GetKonfiguration()
@@ -65,11 +111,18 @@ namespace BCT.AWK.Converter
             return konfigurationFile;
         }
 
-        private static List<Anwesenheit> GetAnwesenheiten(ImportKonfiguration konfiguration)
+        private static List<Anwesenheit> GetAnwesenheiten(FileInfo excelFile, ImportKonfiguration konfiguration)
         {
-            ExcelImportRepository konfigurationRepository = new(konfiguration);
-            List<Anwesenheit> anwesenheiten = konfigurationRepository.Laden();
+            ExcelImportRepository excelImportRepository = new(konfiguration);
+            List<Anwesenheit> anwesenheiten = excelImportRepository.Laden(excelFile);
             return anwesenheiten;
+        }
+
+        private static int AnwesenheitenExportieren(IEnumerable<Anwesenheit> anwesenheiten, FileInfo excelFile, ExportKonfiguration konfiguration)
+        {
+            CsvExportRepository csvExportRepository = new(konfiguration);
+            int exportiert = csvExportRepository.Export(anwesenheiten, excelFile);
+            return exportiert;
         }
     }
 }
