@@ -20,8 +20,11 @@ namespace BCT.AWK.Converter.Import
 
         public override string ToString()
         {
+            string awkPfad = $"{nameof(AwkPfad)}= {AwkPfad}";
+            string awkBaltt = $"{nameof(AwkBaltt)}= {AwkBaltt}";
+
             string separator = $"{Environment.NewLine}\t";
-            string s = string.Join(separator, "Import Konfiguration", AwkPfad, AwkBaltt, Training, Teilnemer, Anwesenheit);
+            string s = string.Join(separator, "Import Konfiguration", awkPfad, awkBaltt, Training, Teilnemer, Anwesenheit);
             return s;
         }
     }

@@ -56,7 +56,7 @@ namespace BCT.AWK.Converter
                 Console.WriteLine();
 
                 Console.WriteLine("CSV Exportieren");
-                int exportiert = AnwesenheitenExportieren(anwesenheitskontrolle.Anwesenheiten, excelFile, konfiguration.Export);
+                int exportiert = AnwesenheitenExportieren(anwesenheitskontrolle, excelFile, konfiguration.Export);
                 Console.WriteLine($"{exportiert} Anwesenheiten exportiert");
             }
             catch (Exception ex)
@@ -120,10 +120,10 @@ namespace BCT.AWK.Converter
             return anwesenheitskontrolle;
         }
 
-        private static int AnwesenheitenExportieren(IEnumerable<Anwesenheit> anwesenheiten, FileInfo excelFile, ExportKonfiguration konfiguration)
+        private static int AnwesenheitenExportieren(Anwesenheitskontrolle anwesenheitskontrolle, FileInfo excelFile, ExportKonfiguration konfiguration)
         {
             CsvExport csvExportRepository = new(konfiguration);
-            int exportiert = csvExportRepository.Export(anwesenheiten, excelFile);
+            int exportiert = csvExportRepository.Export(anwesenheitskontrolle, excelFile);
             return exportiert;
         }
     }

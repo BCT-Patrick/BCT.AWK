@@ -24,7 +24,12 @@ namespace BCT.AWK.Converter.Import
             string ortZeile = $"{nameof(OrtZeile)}= {OrtZeile}";
 
             string separator = $"{Environment.NewLine}\t\t";
-            string s = string.Join(separator, "Training Konfiguration:", ersteTrainingSpalte, letzteTrainingSpalte, artZeile, datumZeile, zeitZeile, dauerZeile, ortZeile);
+            string s = string.Join(separator, "Training Konfiguration:",
+                ersteTrainingSpalte, 
+                letzteTrainingSpalte, 
+                artZeile, datumZeile, 
+                zeitZeile, dauerZeile,
+                ortZeile);
             return s;
         }
     }

@@ -1,5 +1,4 @@
 ﻿using BCT.AWK.Converter.Anwesenheitskontrollen;
-using Microsoft.Extensions.Configuration;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;

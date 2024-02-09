@@ -6,12 +6,12 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
     {
         public Anwesenheitskontrolle(IReadOnlyList<Person> teilnehmer, IReadOnlyList<Training> trainings, IReadOnlyList<Anwesenheit> anwesenheiten)
         {
-            Teilnehmer = teilnehmer;
+            Personen = teilnehmer;
             Trainings = trainings;
             Anwesenheiten = anwesenheiten;
         }
 
-        public IReadOnlyList<Person> Teilnehmer { get; }
+        public IReadOnlyList<Person> Personen { get; }
         public IReadOnlyList<Training> Trainings { get; }
         public IReadOnlyList<Anwesenheit> Anwesenheiten { get; }
     }

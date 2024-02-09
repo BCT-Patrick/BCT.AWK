@@ -9,10 +9,11 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
             string? vorName, 
             string? nachName,
             DateTime? geburtstag, 
-            GeschlechtTyp? geschlecht, 
-            SpracheTyp? muttersprache, 
+            GeschlechtTyp? geschlecht,
             string? ahvNr,
-            string? peId, 
+            string? peId,
+            NationalitaetTyp? nationalitaet,
+            SpracheTyp? muttersprache, 
             string? strasse,
             string? hausnummer,
             string? plz, 
@@ -24,9 +25,10 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
             NachName = nachName;
             Geburtstag = geburtstag;
             Geschlecht = geschlecht;
-            Muttersprache = muttersprache;
             AhvNr = ahvNr;
             PeId = peId;
+            Nationalitaet = nationalitaet;
+            Muttersprache = muttersprache;
             Strasse = strasse;
             Hausnummer = hausnummer;
             Plz = plz;
@@ -39,9 +41,10 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
         public string? NachName { get; }
         public DateTime? Geburtstag { get; }
         public GeschlechtTyp? Geschlecht { get; }
-        public SpracheTyp? Muttersprache { get; }
         public string? AhvNr { get; }
         public string? PeId { get; }
+        public NationalitaetTyp? Nationalitaet { get; }
+        public SpracheTyp? Muttersprache { get; }
         public string? Strasse { get; }
         public string? Hausnummer { get; }
         public string? Plz { get; }
@@ -52,6 +55,13 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
         {
             Maennlich,
             Weiblich
+        }
+
+        public enum NationalitaetTyp
+        {
+            CH,
+            FL,
+            Andere
         }
 
         public enum SpracheTyp

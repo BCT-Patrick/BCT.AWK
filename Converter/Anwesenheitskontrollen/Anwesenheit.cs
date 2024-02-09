@@ -1,6 +1,4 @@
-﻿using static BCT.AWK.Converter.Anwesenheitskontrollen.Person;
-
-namespace BCT.AWK.Converter.Anwesenheitskontrollen
+﻿namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
     internal class Anwesenheit
     {

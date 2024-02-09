@@ -29,17 +29,17 @@ namespace BCT.AWK.Converter.Import
             string nummerSpalte = $"{nameof(NummerSpalte)}= {NummerSpalte}";
             string vorNameSpalte = $"{nameof(VorNameSpalte)}= {VorNameSpalte}";
             string nchNameSpalte = $"{nameof(NachNameSpalte)}= {NachNameSpalte}";
-            string geburtstag = $"{nameof(GeburtstagSpalte)}= {GeburtstagSpalte}";
-            string geschlecht = $"{nameof(GeschlechtSpalte)}= {GeschlechtSpalte}";
-            string ahvNr = $"{nameof(AhvNrSpalte)}= {AhvNrSpalte}";
-            string pPeId = $"{nameof(PeIdSpalte)}= {PeIdSpalte}";
-            string nationalitaet = $"{nameof(NationalitaetSpalte)}= {NationalitaetSpalte}";
-            string muttersprache = $"{nameof(MutterspracheSpalte)}= {MutterspracheSpalte}";
-            string strasse = $"{nameof(StrasseSpalte)}= {StrasseSpalte}";
-            string hausnummer = $"{nameof(HausnummerSpalte)}= {HausnummerSpalte}";
-            string plz = $"{nameof(PlzSpalte)}= {PlzSpalte}";
-            string ort = $"{nameof(OrtSpalte)}= {OrtSpalte}";
-            string land = $"{nameof(LandSpalte)}= {LandSpalte}";
+            string geburtstagSpalte = $"{nameof(GeburtstagSpalte)}= {GeburtstagSpalte}";
+            string geschlechtSpalte = $"{nameof(GeschlechtSpalte)}= {GeschlechtSpalte}";
+            string ahvNrSpalte = $"{nameof(AhvNrSpalte)}= {AhvNrSpalte}";
+            string pPeIdSpalte = $"{nameof(PeIdSpalte)}= {PeIdSpalte}";
+            string nationalitaetSpalte = $"{nameof(NationalitaetSpalte)}= {NationalitaetSpalte}";
+            string mutterspracheSpalte = $"{nameof(MutterspracheSpalte)}= {MutterspracheSpalte}";
+            string strasseSpalte = $"{nameof(StrasseSpalte)}= {StrasseSpalte}";
+            string hausnummerSpalte = $"{nameof(HausnummerSpalte)}= {HausnummerSpalte}";
+            string plzSpalte = $"{nameof(PlzSpalte)}= {PlzSpalte}";
+            string ortSpalte = $"{nameof(OrtSpalte)}= {OrtSpalte}";
+            string landSpalte = $"{nameof(LandSpalte)}= {LandSpalte}";
 
             string separator = $"{Environment.NewLine}\t\t";
             string s = string.Join(separator, "Teilnehmer Konfiguration:", 
@@ -48,17 +48,17 @@ namespace BCT.AWK.Converter.Import
                 nummerSpalte, 
                 vorNameSpalte, 
                 nchNameSpalte,
-                geburtstag,
-                geschlecht,
-                ahvNr,
-                pPeId,
-                nationalitaet,
-                muttersprache,
-                strasse,
-                hausnummer,
-                plz,
-                ort,
-                land);
+                geburtstagSpalte,
+                geschlechtSpalte,
+                ahvNrSpalte,
+                pPeIdSpalte,
+                nationalitaetSpalte,
+                mutterspracheSpalte,
+                strasseSpalte,
+                hausnummerSpalte,
+                plzSpalte,
+                ortSpalte,
+                landSpalte);
             return s;
         }
     }

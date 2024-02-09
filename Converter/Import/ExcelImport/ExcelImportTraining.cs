@@ -3,7 +3,6 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BCT.AWK.Converter.Import.ExcelImport
 {
