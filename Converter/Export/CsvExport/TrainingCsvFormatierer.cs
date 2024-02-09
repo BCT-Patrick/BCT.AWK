@@ -1,7 +1,7 @@
-﻿using BCT.AWK.Converter.Anwesenheitskontrolle;
+﻿using BCT.AWK.Converter.Anwesenheitskontrollen;
 using System.IO;
 
-namespace BCT.AWK.Converter.Export
+namespace BCT.AWK.Converter.Export.CsvExport
 {
     internal class TrainingCsvFormatierer
     {

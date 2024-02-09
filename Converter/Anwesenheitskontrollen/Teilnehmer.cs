@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace BCT.AWK.Converter.Anwesenheitskontrolle
+namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
     internal class Teilnehmer
     {

@@ -1,4 +1,4 @@
-﻿namespace BCT.AWK.Converter.Anwesenheitskontrolle
+﻿namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
     internal class Anwesenheit
     {
@@ -11,7 +11,7 @@
 
         public Teilnehmer Teilnehmer { get; }
         public Training Training { get; }
-        public bool Anwesend { get; set; }
+        public bool Anwesend { get; }
 
         public override string ToString()
         {

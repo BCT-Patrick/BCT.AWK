@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BCT.AWK.Converter.Anwesenheitskontrolle
+namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
     internal class Training
     {

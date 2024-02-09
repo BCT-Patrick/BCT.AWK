@@ -1,15 +1,15 @@
-﻿using BCT.AWK.Converter.Anwesenheitskontrolle;
+﻿using BCT.AWK.Converter.Anwesenheitskontrollen;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace BCT.AWK.Converter.Export
+namespace BCT.AWK.Converter.Export.CsvExport
 {
-    internal class CsvExportRepository : IExportRepository
+    internal class CsvExport : IExport
     {
         private readonly ExportKonfiguration _exportKonfiguration;
 
-        public CsvExportRepository(ExportKonfiguration exportKonfiguration)
+        public CsvExport(ExportKonfiguration exportKonfiguration)
         {
             _exportKonfiguration = exportKonfiguration;
         }

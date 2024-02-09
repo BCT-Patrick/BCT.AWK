@@ -2,7 +2,7 @@
 
 namespace BCT.AWK.Converter.Export
 {
-    public class ExportKonfiguration
+    internal class ExportKonfiguration
     {
         public string FileZeitstempelFormat { get; set; } = "yyyy-MM-dd HHmmss";
         public string FileExtension { get; set; } = ".csv";
