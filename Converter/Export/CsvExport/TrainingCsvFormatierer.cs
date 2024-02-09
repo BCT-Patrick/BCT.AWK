@@ -29,7 +29,7 @@ namespace BCT.AWK.Converter.Export.CsvExport
 
         public void WriteZeile(Training training)
         {
-            _writer.Write(training.Datum.ToString("dd.MM.yyyy"));
+            _writer.Write(training.Datum?.ToString("dd.MM.yyyy"));
             _writer.Write(_separator);
             _writer.Write(training.Art);
             _writer.Write(_separator);

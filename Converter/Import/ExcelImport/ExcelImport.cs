@@ -11,15 +11,17 @@ namespace BCT.AWK.Converter.Import.ExcelImport
     {
         private readonly ImportKonfiguration _konfiguration;
 
-        private readonly ExcelTeilnehmerImport _teilnehmerImporter;
-        private readonly ExcelTrainingImport _trainingsImporter;
+        private readonly ExcelImportPerson _importPerson;
+        private readonly ExcelImportTraining _importTraining;
+        private readonly ExcelImportAnwesenheit _importAnwesenheit;
 
         public ExcelImport(ImportKonfiguration konfiguration)
         {
             _konfiguration = konfiguration;
 
-            _teilnehmerImporter = new(konfiguration);
-            _trainingsImporter = new(konfiguration);
+            _importPerson = new(konfiguration.Teilnemer);
+            _importTraining = new(konfiguration.Training);
+            _importAnwesenheit = new(konfiguration.Anwesenheit);
         }
 
         public Anwesenheitskontrolle Laden(FileInfo excelFile)
@@ -29,9 +31,9 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             ExcelPackage package = new(fileStream);
             ExcelWorksheet worksheet = package.Workbook.Worksheets[_konfiguration.AwkBaltt];
 
-            Dictionary<int, Teilnehmer> teilnehmerDictionary = _teilnehmerImporter.Laden(worksheet);
-            Dictionary<int, Training> trainingDictionary = _trainingsImporter.Laden(worksheet);
-            List<Anwesenheit> anwesenheiten = ExcelAnwesenheitImport.Laden(teilnehmerDictionary, trainingDictionary, worksheet);
+            Dictionary<int, Person> teilnehmerDictionary = _importPerson.Laden(worksheet);
+            Dictionary<int, Training> trainingDictionary = _importTraining.Laden(worksheet);
+            List<Anwesenheit> anwesenheiten = _importAnwesenheit.Laden(teilnehmerDictionary, trainingDictionary, worksheet);
 
             Anwesenheitskontrolle anwesenheitskontrolle = new(teilnehmerDictionary.Values.ToList(), trainingDictionary.Values.ToList(), anwesenheiten);
             return anwesenheitskontrolle;

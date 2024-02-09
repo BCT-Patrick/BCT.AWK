@@ -1,21 +1,31 @@
-﻿namespace BCT.AWK.Converter.Anwesenheitskontrollen
+﻿using static BCT.AWK.Converter.Anwesenheitskontrollen.Person;
+
+namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
     internal class Anwesenheit
     {
-        public Anwesenheit(Teilnehmer teilnehmer, Training training, bool anwesend)
+        public Anwesenheit(FunktionsTyp? funktion, Person teilnehmer, Training training, bool anwesend)
         {
+            Funktion = funktion;
             Teilnehmer = teilnehmer;
             Training = training;
             Anwesend = anwesend;
         }
 
-        public Teilnehmer Teilnehmer { get; }
+        public Person Teilnehmer { get; }
         public Training Training { get; }
+        public FunktionsTyp? Funktion { get; }
         public bool Anwesend { get; }
+
+        public enum FunktionsTyp
+        {
+            Teilnehmer,
+            Leiter
+        }
 
         public override string ToString()
         {
-            return $"{Teilnehmer} {Training} {Anwesend}";
+            return $"{Funktion} {Teilnehmer} {Training} {Anwesend}";
         }
     }
 }

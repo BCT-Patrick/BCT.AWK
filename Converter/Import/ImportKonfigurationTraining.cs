@@ -2,10 +2,11 @@
 
 namespace BCT.AWK.Converter.Import
 {
-    internal class TrainingImportKonfiguration
+    internal class ImportKonfigurationTraining
     {
-        public int ErsteTrainingSpalte { get; set; } = 8;
-        public int LetzteTrainingSpalte { get; set; } = 17;
+        public int ErsteTrainingSpalte { get; set; } = 16;
+        public int LetzteTrainingSpalte { get; set; } = 50;
+
         public int ArtZeile { get; set; } = 2;
         public int DatumZeile { get; set; } = 3;
         public int ZeitZeile { get; set; } = 4;

@@ -3,14 +3,15 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BCT.AWK.Converter.Import.ExcelImport
 {
-    internal class ExcelTrainingImport
+    internal class ExcelImportTraining
     {
-        private readonly ImportKonfiguration _konfiguration;
+        private readonly ImportKonfigurationTraining _konfiguration;
 
-        public ExcelTrainingImport(ImportKonfiguration konfiguration)
+        public ExcelImportTraining(ImportKonfigurationTraining konfiguration)
         {
             _konfiguration = konfiguration;
         }
@@ -19,10 +20,10 @@ namespace BCT.AWK.Converter.Import.ExcelImport
         {
             Dictionary<int, Training> trainingDictionary = new();
 
-            for (int trainingIndex = _konfiguration.Training.ErsteTrainingSpalte; trainingIndex <= _konfiguration.Training.LetzteTrainingSpalte; trainingIndex++)
+            for (int trainingIndex = _konfiguration.ErsteTrainingSpalte; trainingIndex <= _konfiguration.LetzteTrainingSpalte; trainingIndex++)
             {
-                Training? training = GetTraining(worksheet, trainingIndex);
-                if (training is not null)
+                Training training = GetTraining(worksheet, trainingIndex);
+                if (training.Art is not null)
                 {
                     trainingDictionary.Add(trainingIndex, training);
                 }
@@ -31,26 +32,25 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             return trainingDictionary;
         }
 
-        private Training? GetTraining(ExcelWorksheet worksheet, int treiningIndex)
+        private Training GetTraining(ExcelWorksheet worksheet, int treiningIndex)
         {
-            string? artString = worksheet.Cells[_konfiguration.Training.ArtZeile, treiningIndex].Value?.ToString();
-            DateTime? datum = GetDateTime(worksheet.Cells[_konfiguration.Training.DatumZeile, treiningIndex].Value);
-            double? dauer = (double?)worksheet.Cells[_konfiguration.Training.DauerZeile, treiningIndex].Value;
-            if (artString is null || datum is null || dauer is null)
+            Training.TrainingsTyp? art = GetArt(worksheet.Cells[_konfiguration.ArtZeile, treiningIndex].Value?.ToString());
+            DateTime? datum = GetDateTime(worksheet.Cells[_konfiguration.DatumZeile, treiningIndex].Value);
+            double? dauer = (double?)worksheet.Cells[_konfiguration.DauerZeile, treiningIndex].Value;
+            DateTime? zeit = GetDateTime(worksheet.Cells[_konfiguration.ZeitZeile, treiningIndex].Value);
+            string? ort = worksheet.Cells[_konfiguration.OrtZeile, treiningIndex].Value?.ToString();
+
+            Training training = new(art, datum, zeit, dauer, ort);
+            return training;
+        }
+
+        private static Training.TrainingsTyp? GetArt(string? artString)
+        {
+            if (string.IsNullOrWhiteSpace(artString))
             {
                 return null;
             }
 
-            Training.TrainingsTyp art = GetArt(artString);
-            DateTime? zeit = GetDateTime(worksheet.Cells[_konfiguration.Training.ZeitZeile, treiningIndex].Value);
-            string? ort = worksheet.Cells[_konfiguration.Training.OrtZeile, treiningIndex].Value?.ToString();
-
-            Training training = new(art, datum.Value, zeit, dauer.Value, ort);
-            return training;
-        }
-
-        private static Training.TrainingsTyp GetArt(string artString)
-        {
             if (Enum.TryParse(artString.Trim(), true, out Training.TrainingsTyp art))
             {
                 return art;
