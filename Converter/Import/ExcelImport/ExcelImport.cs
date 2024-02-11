@@ -19,7 +19,7 @@ namespace BCT.AWK.Converter.Import.ExcelImport
         {
             _konfiguration = konfiguration;
 
-            _importPerson = new(konfiguration.Teilnemer);
+            _importPerson = new(konfiguration.Personen);
             _importTraining = new(konfiguration.Training);
             _importAnwesenheit = new(konfiguration.Anwesenheit);
         }

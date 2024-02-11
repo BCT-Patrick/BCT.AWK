@@ -4,7 +4,7 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
     internal class Training
     {
-        public Training(TrainingsTyp? art, DateTime? datum, DateTime? zeit, double? dauer, string? ort)
+        public Training(TrainingsTyp? art, DateOnly? datum, TimeOnly? zeit, double? dauer, string? ort)
         {
             Art = art;
             Datum = datum;
@@ -14,8 +14,8 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
         }
 
         public TrainingsTyp? Art { get; }
-        public DateTime? Datum { get; }
-        public DateTime? Zeit { get; }
+        public DateOnly? Datum { get; }
+        public TimeOnly? Zeit { get; }
         public double? Dauer { get; }
         public string? Ort { get; }
 

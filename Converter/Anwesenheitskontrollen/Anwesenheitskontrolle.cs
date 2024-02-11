@@ -4,9 +4,9 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
     internal class Anwesenheitskontrolle
     {
-        public Anwesenheitskontrolle(IReadOnlyList<Person> teilnehmer, IReadOnlyList<Training> trainings, IReadOnlyList<Anwesenheit> anwesenheiten)
+        public Anwesenheitskontrolle(IReadOnlyList<Person> personen, IReadOnlyList<Training> trainings, IReadOnlyList<Anwesenheit> anwesenheiten)
         {
-            Personen = teilnehmer;
+            Personen = personen;
             Trainings = trainings;
             Anwesenheiten = anwesenheiten;
         }

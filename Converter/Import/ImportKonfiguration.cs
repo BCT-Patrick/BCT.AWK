@@ -7,7 +7,7 @@ namespace BCT.AWK.Converter.Import
         public ImportKonfiguration()
         {
             Training = new();
-            Teilnemer = new();
+            Personen = new();
             Anwesenheit = new();
         }
 
@@ -15,7 +15,7 @@ namespace BCT.AWK.Converter.Import
         public string AwkBaltt { get; set; } = "AWK";
 
         public ImportKonfigurationTraining Training { get; set; }
-        public ImportKonfigurationPerson Teilnemer { get; set; }
+        public ImportKonfigurationPerson Personen { get; set; }
         public ImportKonfigurationAnwesenheit Anwesenheit { get; set; }
 
         public override string ToString()
@@ -24,7 +24,7 @@ namespace BCT.AWK.Converter.Import
             string awkBaltt = $"{nameof(AwkBaltt)}= {AwkBaltt}";
 
             string separator = $"{Environment.NewLine}\t";
-            string s = string.Join(separator, "Import Konfiguration", awkPfad, awkBaltt, Training, Teilnemer, Anwesenheit);
+            string s = string.Join(separator, "Import Konfiguration", awkPfad, awkBaltt, Training, Personen, Anwesenheit);
             return s;
         }
     }

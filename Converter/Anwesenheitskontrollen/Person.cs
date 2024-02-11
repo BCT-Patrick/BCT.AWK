@@ -8,7 +8,7 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
             string? nummer, 
             string? vorName, 
             string? nachName,
-            DateTime? geburtstag, 
+            DateOnly? geburtstag, 
             GeschlechtTyp? geschlecht,
             string? ahvNr,
             string? peId,
@@ -39,7 +39,7 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
         public string? Nummer { get; }
         public string? VorName { get; }
         public string? NachName { get; }
-        public DateTime? Geburtstag { get; }
+        public DateOnly? Geburtstag { get; }
         public GeschlechtTyp? Geschlecht { get; }
         public string? AhvNr { get; }
         public string? PeId { get; }

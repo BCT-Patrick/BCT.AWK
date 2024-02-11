@@ -2,7 +2,6 @@
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace BCT.AWK.Converter.Import.ExcelImport
 {
@@ -36,12 +35,12 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             string? nummer = worksheet.Cells[teilnehmerIndex, _konfiguration.NummerSpalte].Value?.ToString();
             string? vorName = worksheet.Cells[teilnehmerIndex, _konfiguration.VorNameSpalte].Value?.ToString();
             string? nachName = worksheet.Cells[teilnehmerIndex, _konfiguration.NachNameSpalte].Value?.ToString();
-            DateTime? geburtstag = GetDateTime(worksheet.Cells[teilnehmerIndex, _konfiguration.GeburtstagSpalte].Value);
+            DateOnly? geburtstag = ExcelImportDateTime.GetDate(worksheet.Cells[teilnehmerIndex, _konfiguration.GeburtstagSpalte].Value);
             Person.GeschlechtTyp? geschlecht = GetGeschlecht(worksheet.Cells[teilnehmerIndex, _konfiguration.GeschlechtSpalte].Value?.ToString());
             string? ahvNr = worksheet.Cells[teilnehmerIndex, _konfiguration.AhvNrSpalte].Value?.ToString();
             string? peId = worksheet.Cells[teilnehmerIndex, _konfiguration.PeIdSpalte].Value?.ToString();
-            Person.NationalitaetTyp nationalitaet = GetNationalitaet(worksheet.Cells[teilnehmerIndex, _konfiguration.NationalitaetSpalte].Value?.ToString());
-            Person.SpracheTyp muttersprache = GetSprache(worksheet.Cells[teilnehmerIndex, _konfiguration.MutterspracheSpalte].Value?.ToString());
+            Person.NationalitaetTyp? nationalitaet = GetNationalitaet(worksheet.Cells[teilnehmerIndex, _konfiguration.NationalitaetSpalte].Value?.ToString());
+            Person.SpracheTyp? muttersprache = GetSprache(worksheet.Cells[teilnehmerIndex, _konfiguration.MutterspracheSpalte].Value?.ToString());
             string? strasse = worksheet.Cells[teilnehmerIndex, _konfiguration.StrasseSpalte].Value?.ToString();
             string? hausnummer = worksheet.Cells[teilnehmerIndex, _konfiguration.HausnummerSpalte].Value?.ToString();
             string? plz = worksheet.Cells[teilnehmerIndex, _konfiguration.PlzSpalte].Value?.ToString();
@@ -67,35 +66,18 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             return person;
         }
 
-        private static DateTime? GetDateTime(object? value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-
-            if (value is DateTime dateTimeValue)
-            {
-                return dateTimeValue;
-            }
-
-            if (value is double doubleValue)
-            {
-                DateTime date = DateTime.FromOADate(doubleValue);
-                return date;
-            }
-
-            if (value is string stringValue)
-            {
-                bool isDateTime = DateTime.TryParse(stringValue, CultureInfo.InvariantCulture, out DateTime dateTime);
-                return isDateTime ? dateTime : null;
-            }
-
-            return null;
-        }
-
         private static Person.GeschlechtTyp? GetGeschlecht(string? geschlechtString)
         {
+            switch (geschlechtString?.ToLower())
+            {
+                case "m":
+                case "männlich":
+                    return Person.GeschlechtTyp.Maennlich;
+                case "w":
+                case "weiblich":
+                    return Person.GeschlechtTyp.Weiblich;
+            }
+
             if (Enum.TryParse(geschlechtString?.Trim(), true, out Person.GeschlechtTyp geschlecht))
             {
                 return geschlecht;
@@ -104,24 +86,42 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             return null;
         }
 
-        private static Person.NationalitaetTyp GetNationalitaet(string? nationalitaetString)
+        private static Person.NationalitaetTyp? GetNationalitaet(string? nationalitaetString)
         {
+            switch (nationalitaetString?.ToLower())
+            {
+                case "ch":
+                    return Person.NationalitaetTyp.CH;
+                case "fl":
+                    return Person.NationalitaetTyp.FL;
+            }
+
             if (Enum.TryParse(nationalitaetString?.Trim(), true, out Person.NationalitaetTyp nationalitaet))
             {
                 return nationalitaet;
             }
 
-            return Person.NationalitaetTyp.Andere;
+            return null;
         }
 
-        private static Person.SpracheTyp GetSprache(string? spracheString)
+        private static Person.SpracheTyp? GetSprache(string? spracheString)
         {
+            switch (spracheString?.ToLower())
+            {
+                case "de":
+                    return Person.SpracheTyp.Deutsch;
+                case "fr":
+                    return Person.SpracheTyp.Franzoesisch;
+                case "it":
+                    return Person.SpracheTyp.Italienisch;
+            }
+
             if (Enum.TryParse(spracheString?.Trim(), true, out Person.SpracheTyp sprache))
             {
                 return sprache;
             }
 
-            return Person.SpracheTyp.Andere;
+            return null;
         }
     }
 }
