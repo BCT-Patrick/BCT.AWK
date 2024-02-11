@@ -38,7 +38,7 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             anwesenheitskontrolle.Anwesenheiten.Should().HaveCount(erwarteteAnzahlAnwesenheiten);
         }
 
-        private List<Person> GetErwartetePersonen()
+        private static List<Person> GetErwartetePersonen()
         {
             List<Person> personen = new()
             {
@@ -67,7 +67,7 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             return personen;
         }
 
-        private List<Training> GetTrainings()
+        private static List<Training> GetTrainings()
         {
             List<Training> training = new()
             {
