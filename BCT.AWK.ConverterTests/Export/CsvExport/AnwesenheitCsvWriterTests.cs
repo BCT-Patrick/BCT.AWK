@@ -41,8 +41,8 @@ namespace BCT.AWK.Converter.Export.CsvExport
         public void WriteZeileTest()
         {
             Person person = new("nummer", "vorname", "nachname", new(2020, 12, 31), Person.GeschlechtTyp.Maennlich, "ahvNr", "peId", Person.NationalitaetTyp.CH, Person.SpracheTyp.Deutsch, "strasse", "hausnummer", "plz", "ort", "land");
-            Training training = new(Training.TrainingsTyp.Training, new(2021,6,15), new(19,30), 1.5, "Ort");
-            Anwesenheit anwesenheit = new(Anwesenheit.FunktionsTyp.Teilnehmer, person, training, true);
+            Aktivitaet aktivitaet = new(Aktivitaet.AktivitaetsTyp.Training, new(2021,6,15), new(19,30), 1.5, "Ort");
+            Anwesenheit anwesenheit = new(Anwesenheit.FunktionsTyp.Teilnehmer, person, aktivitaet, true);
 
             _anwesenheitCsvWriter.WriteZeile(anwesenheit);
 

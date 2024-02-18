@@ -24,8 +24,8 @@ namespace BCT.AWK.Converter.Import
 
         public override string ToString()
         {
-            string ersteTeilnehmerZeile = $"{nameof(ErstePersonZeile)}= {ErstePersonZeile}";
-            string letzteTeilnehmerZeile = $"{nameof(LetztePersonZeile)}= {LetztePersonZeile}";
+            string erstePersonZeile = $"{nameof(ErstePersonZeile)}= {ErstePersonZeile}";
+            string letztePersonZeile = $"{nameof(LetztePersonZeile)}= {LetztePersonZeile}";
             string nummerSpalte = $"{nameof(NummerSpalte)}= {NummerSpalte}";
             string vorNameSpalte = $"{nameof(VorNameSpalte)}= {VorNameSpalte}";
             string nchNameSpalte = $"{nameof(NachNameSpalte)}= {NachNameSpalte}";
@@ -42,9 +42,9 @@ namespace BCT.AWK.Converter.Import
             string landSpalte = $"{nameof(LandSpalte)}= {LandSpalte}";
 
             string separator = $"{Environment.NewLine}\t\t";
-            string s = string.Join(separator, "Teilnehmer Konfiguration:", 
-                ersteTeilnehmerZeile, 
-                letzteTeilnehmerZeile,
+            string s = string.Join(separator, "Person Konfiguration:", 
+                erstePersonZeile, 
+                letztePersonZeile,
                 nummerSpalte, 
                 vorNameSpalte, 
                 nchNameSpalte,

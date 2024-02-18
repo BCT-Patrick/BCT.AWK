@@ -2,9 +2,9 @@
 
 namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
-    internal class Training
+    internal class Aktivitaet
     {
-        public Training(TrainingsTyp? art, DateOnly? datum, TimeOnly? zeit, double? dauer, string? ort)
+        public Aktivitaet(AktivitaetsTyp? art, DateOnly? datum, TimeOnly? zeit, double? dauer, string? ort)
         {
             Art = art;
             Datum = datum;
@@ -13,13 +13,13 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
             Ort = ort;
         }
 
-        public TrainingsTyp? Art { get; }
+        public AktivitaetsTyp? Art { get; }
         public DateOnly? Datum { get; }
         public TimeOnly? Zeit { get; }
         public double? Dauer { get; }
         public string? Ort { get; }
 
-        public enum TrainingsTyp
+        public enum AktivitaetsTyp
         {
             Training,
             Wettkampf,

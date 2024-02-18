@@ -2,10 +2,10 @@
 
 namespace BCT.AWK.Converter.Import
 {
-    internal class ImportKonfigurationTraining
+    internal class ImportKonfigurationAktivitaet
     {
-        public int ErsteTrainingSpalte { get; set; } = 16;
-        public int LetzteTrainingSpalte { get; set; } = 50;
+        public int ErsteAktivitaetSpalte { get; set; } = 16;
+        public int LetzteAktivitaetSpalte { get; set; } = 50;
 
         public int ArtZeile { get; set; } = 2;
         public int DatumZeile { get; set; } = 3;
@@ -15,8 +15,8 @@ namespace BCT.AWK.Converter.Import
 
         public override string ToString()
         {
-            string ersteTrainingSpalte = $"{nameof(ErsteTrainingSpalte)}= {ErsteTrainingSpalte}";
-            string letzteTrainingSpalte = $"{nameof(LetzteTrainingSpalte)}= {LetzteTrainingSpalte}";
+            string ersteAktivitaetSpalte = $"{nameof(ErsteAktivitaetSpalte)}= {ErsteAktivitaetSpalte}";
+            string letzteAktivitaetSpalte = $"{nameof(LetzteAktivitaetSpalte)}= {LetzteAktivitaetSpalte}";
             string artZeile = $"{nameof(ArtZeile)}= {ArtZeile}";
             string datumZeile = $"{nameof(DatumZeile)}= {DatumZeile}";
             string zeitZeile = $"{nameof(ZeitZeile)}= {ZeitZeile}";
@@ -24,9 +24,9 @@ namespace BCT.AWK.Converter.Import
             string ortZeile = $"{nameof(OrtZeile)}= {OrtZeile}";
 
             string separator = $"{Environment.NewLine}\t\t";
-            string s = string.Join(separator, "Training Konfiguration:",
-                ersteTrainingSpalte, 
-                letzteTrainingSpalte, 
+            string s = string.Join(separator, "Aktivitaet Konfiguration:",
+                ersteAktivitaetSpalte, 
+                letzteAktivitaetSpalte, 
                 artZeile, datumZeile, 
                 zeitZeile, dauerZeile,
                 ortZeile);

@@ -12,7 +12,7 @@ namespace BCT.AWK.Converter.Import.ExcelImport
         private readonly ImportKonfiguration _konfiguration;
 
         private readonly ExcelImportPerson _importPerson;
-        private readonly ExcelImportTraining _importTraining;
+        private readonly ExcelImportAktivitaet _importAktivitaet;
         private readonly ExcelImportAnwesenheit _importAnwesenheit;
 
         public ExcelImport(ImportKonfiguration konfiguration)
@@ -20,8 +20,8 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             _konfiguration = konfiguration;
 
             _importPerson = new(konfiguration.Personen);
-            _importTraining = new(konfiguration.Training);
-            _importAnwesenheit = new(konfiguration.Anwesenheit);
+            _importAktivitaet = new(konfiguration.Aktivitaeten);
+            _importAnwesenheit = new(konfiguration.Anwesenheiten);
         }
 
         public Anwesenheitskontrolle Laden(FileInfo excelFile)
@@ -31,11 +31,11 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             ExcelPackage package = new(fileStream);
             ExcelWorksheet worksheet = package.Workbook.Worksheets[_konfiguration.AwkBaltt];
 
-            Dictionary<int, Person> teilnehmerDictionary = _importPerson.Laden(worksheet);
-            Dictionary<int, Training> trainingDictionary = _importTraining.Laden(worksheet);
-            List<Anwesenheit> anwesenheiten = _importAnwesenheit.Laden(teilnehmerDictionary, trainingDictionary, worksheet);
+            Dictionary<int, Person> personDictionary = _importPerson.Laden(worksheet);
+            Dictionary<int, Aktivitaet> aktivitaetDictionary = _importAktivitaet.Laden(worksheet);
+            List<Anwesenheit> anwesenheiten = _importAnwesenheit.Laden(personDictionary, aktivitaetDictionary, worksheet);
 
-            Anwesenheitskontrolle anwesenheitskontrolle = new(teilnehmerDictionary.Values.ToList(), trainingDictionary.Values.ToList(), anwesenheiten);
+            Anwesenheitskontrolle anwesenheitskontrolle = new(personDictionary.Values.ToList(), aktivitaetDictionary.Values.ToList(), anwesenheiten);
             return anwesenheitskontrolle;
         }
 

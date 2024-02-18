@@ -31,10 +31,10 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             List<Person> erwartetePersonen = GetErwartetePersonen();
             anwesenheitskontrolle.Personen.Should().BeEquivalentTo(erwartetePersonen);
 
-            List<Training> erwarteteTrainings = GetTrainings();
-            anwesenheitskontrolle.Trainings.Should().BeEquivalentTo(erwarteteTrainings);
+            List<Aktivitaet> erwarteteAktivitaeten = GetAktivitaeten();
+            anwesenheitskontrolle.Aktivitaeten.Should().BeEquivalentTo(erwarteteAktivitaeten);
 
-            int erwarteteAnzahlAnwesenheiten = erwartetePersonen.Count * erwarteteTrainings.Count;
+            int erwarteteAnzahlAnwesenheiten = erwartetePersonen.Count * erwarteteAktivitaeten.Count;
             anwesenheitskontrolle.Anwesenheiten.Should().HaveCount(erwarteteAnzahlAnwesenheiten);
         }
 
@@ -67,23 +67,23 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             return personen;
         }
 
-        private static List<Training> GetTrainings()
+        private static List<Aktivitaet> GetAktivitaeten()
         {
-            List<Training> training = new()
+            List<Aktivitaet> aktivitaeten = new()
             {
-                new(Training.TrainingsTyp.Training, new(2022,8,18), new(20,0,0), 90, null),
-                new(Training.TrainingsTyp.Training, new(2022,8,19), new(20,0,0), 90, null),
-                new(Training.TrainingsTyp.Training, new(2022,8,25), new(20,0,0), 90, null),
-                new(Training.TrainingsTyp.Training, new(2022,9,1), new(20,0,0), 90, null),
-                new(Training.TrainingsTyp.Wettkampf, new(2022,9,8), null, null, null),
-                new(Training.TrainingsTyp.Training, new(2022,9,15), new(20,0,0), 90, null),
-                new(Training.TrainingsTyp.Training, new(2022,9,22), new(20,0,0), 90, null),
-                new(Training.TrainingsTyp.Training, new(2022,9,29), new(20,0,0), 90, null),
-                new(Training.TrainingsTyp.Training, new(2022,10,6), new(20,0,0), 90, null),
-                new(Training.TrainingsTyp.Wettkampf, new(2022,10,13), null, null, null)
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,18), new(20,0,0), 90, null),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,19), new(20,0,0), 90, null),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,25), new(20,0,0), 90, null),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,1), new(20,0,0), 90, null),
+                new(Aktivitaet.AktivitaetsTyp.Wettkampf, new(2022,9,8), null, null, null),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,15), new(20,0,0), 90, null),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,22), new(20,0,0), 90, null),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,29), new(20,0,0), 90, null),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,10,6), new(20,0,0), 90, null),
+                new(Aktivitaet.AktivitaetsTyp.Wettkampf, new(2022,10,13), null, null, null)
             };
 
-            return training;
+            return aktivitaeten;
         }
     }
 }

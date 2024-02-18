@@ -2,16 +2,16 @@
 {
     internal class Anwesenheit
     {
-        public Anwesenheit(FunktionsTyp? funktion, Person teilnehmer, Training training, bool anwesend)
+        public Anwesenheit(FunktionsTyp? funktion, Person person, Aktivitaet aktivitaet, bool anwesend)
         {
             Funktion = funktion;
-            Teilnehmer = teilnehmer;
-            Training = training;
+            Person = person;
+            Aktivitaet = aktivitaet;
             Anwesend = anwesend;
         }
 
-        public Person Teilnehmer { get; }
-        public Training Training { get; }
+        public Person Person { get; }
+        public Aktivitaet Aktivitaet { get; }
         public FunktionsTyp? Funktion { get; }
         public bool Anwesend { get; }
 
@@ -23,7 +23,7 @@
 
         public override string ToString()
         {
-            return $"{Funktion} {Teilnehmer} {Training} {Anwesend}";
+            return $"{Funktion} {Person} {Aktivitaet} {Anwesend}";
         }
     }
 }

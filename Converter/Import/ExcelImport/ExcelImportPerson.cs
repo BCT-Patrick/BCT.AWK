@@ -30,22 +30,22 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             return personDictionary;
         }
 
-        private Person GetPerson(ExcelWorksheet worksheet, int teilnehmerIndex)
+        private Person GetPerson(ExcelWorksheet worksheet, int personIndex)
         {
-            string? nummer = worksheet.Cells[teilnehmerIndex, _konfiguration.NummerSpalte].Value?.ToString();
-            string? vorName = worksheet.Cells[teilnehmerIndex, _konfiguration.VorNameSpalte].Value?.ToString();
-            string? nachName = worksheet.Cells[teilnehmerIndex, _konfiguration.NachNameSpalte].Value?.ToString();
-            DateOnly? geburtstag = ExcelImportDateTime.GetDate(worksheet.Cells[teilnehmerIndex, _konfiguration.GeburtstagSpalte].Value);
-            Person.GeschlechtTyp? geschlecht = GetGeschlecht(worksheet.Cells[teilnehmerIndex, _konfiguration.GeschlechtSpalte].Value?.ToString());
-            string? ahvNr = worksheet.Cells[teilnehmerIndex, _konfiguration.AhvNrSpalte].Value?.ToString();
-            string? peId = worksheet.Cells[teilnehmerIndex, _konfiguration.PeIdSpalte].Value?.ToString();
-            Person.NationalitaetTyp? nationalitaet = GetNationalitaet(worksheet.Cells[teilnehmerIndex, _konfiguration.NationalitaetSpalte].Value?.ToString());
-            Person.SpracheTyp? muttersprache = GetSprache(worksheet.Cells[teilnehmerIndex, _konfiguration.MutterspracheSpalte].Value?.ToString());
-            string? strasse = worksheet.Cells[teilnehmerIndex, _konfiguration.StrasseSpalte].Value?.ToString();
-            string? hausnummer = worksheet.Cells[teilnehmerIndex, _konfiguration.HausnummerSpalte].Value?.ToString();
-            string? plz = worksheet.Cells[teilnehmerIndex, _konfiguration.PlzSpalte].Value?.ToString();
-            string? ort = worksheet.Cells[teilnehmerIndex, _konfiguration.OrtSpalte].Value?.ToString();
-            string? land = worksheet.Cells[teilnehmerIndex, _konfiguration.LandSpalte].Value?.ToString();
+            string? nummer = worksheet.Cells[personIndex, _konfiguration.NummerSpalte].Value?.ToString();
+            string? vorName = worksheet.Cells[personIndex, _konfiguration.VorNameSpalte].Value?.ToString();
+            string? nachName = worksheet.Cells[personIndex, _konfiguration.NachNameSpalte].Value?.ToString();
+            DateOnly? geburtstag = ExcelImportDateTime.GetDate(worksheet.Cells[personIndex, _konfiguration.GeburtstagSpalte].Value);
+            Person.GeschlechtTyp? geschlecht = GetGeschlecht(worksheet.Cells[personIndex, _konfiguration.GeschlechtSpalte].Value?.ToString());
+            string? ahvNr = worksheet.Cells[personIndex, _konfiguration.AhvNrSpalte].Value?.ToString();
+            string? peId = worksheet.Cells[personIndex, _konfiguration.PeIdSpalte].Value?.ToString();
+            Person.NationalitaetTyp? nationalitaet = GetNationalitaet(worksheet.Cells[personIndex, _konfiguration.NationalitaetSpalte].Value?.ToString());
+            Person.SpracheTyp? muttersprache = GetSprache(worksheet.Cells[personIndex, _konfiguration.MutterspracheSpalte].Value?.ToString());
+            string? strasse = worksheet.Cells[personIndex, _konfiguration.StrasseSpalte].Value?.ToString();
+            string? hausnummer = worksheet.Cells[personIndex, _konfiguration.HausnummerSpalte].Value?.ToString();
+            string? plz = worksheet.Cells[personIndex, _konfiguration.PlzSpalte].Value?.ToString();
+            string? ort = worksheet.Cells[personIndex, _konfiguration.OrtSpalte].Value?.ToString();
+            string? land = worksheet.Cells[personIndex, _konfiguration.LandSpalte].Value?.ToString();
 
             Person person = new(
                 nummer,

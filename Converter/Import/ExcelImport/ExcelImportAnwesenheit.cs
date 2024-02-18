@@ -14,16 +14,16 @@ namespace BCT.AWK.Converter.Import.AnwesenheitImport
             _konfiguration = konfiguration;
         }
 
-        public List<Anwesenheit> Laden(Dictionary<int, Person> teilnehmerDictionary, Dictionary<int, Training> trainingDictionary, ExcelWorksheet worksheet)
+        public List<Anwesenheit> Laden(Dictionary<int, Person> personDictionary, Dictionary<int, Aktivitaet> aktivitaetDictionary, ExcelWorksheet worksheet)
         {
             List<Anwesenheit> anwesenheiten = new();
 
-            foreach (KeyValuePair<int, Training> trainingEintrag in trainingDictionary)
+            foreach (KeyValuePair<int, Aktivitaet> aktivitaetEintrag in aktivitaetDictionary)
             {
 
-                foreach (KeyValuePair<int, Person> teilnehmerEintrag in teilnehmerDictionary)
+                foreach (KeyValuePair<int, Person> personEintrag in personDictionary)
                 {
-                    Anwesenheit anwesenheit = GetAnwesenheit(worksheet, trainingEintrag, teilnehmerEintrag);
+                    Anwesenheit anwesenheit = GetAnwesenheit(worksheet, aktivitaetEintrag, personEintrag);
                     anwesenheiten.Add(anwesenheit);
                 }
             }
@@ -31,17 +31,17 @@ namespace BCT.AWK.Converter.Import.AnwesenheitImport
             return anwesenheiten;
         }
 
-        private Anwesenheit GetAnwesenheit(ExcelWorksheet worksheet, KeyValuePair<int, Training> trainingEintrag, KeyValuePair<int, Person> teilnehmerEintrag)
+        private Anwesenheit GetAnwesenheit(ExcelWorksheet worksheet, KeyValuePair<int, Aktivitaet> aktivitaetEintrag, KeyValuePair<int, Person> PersonEintrag)
         {
-            int treiningIndex = trainingEintrag.Key;
-            Training training = trainingEintrag.Value;
+            int aktivitaetIndex = aktivitaetEintrag.Key;
+            Aktivitaet aktivitaet = aktivitaetEintrag.Value;
 
-            int teilnehmerIndex = teilnehmerEintrag.Key;
-            Person teilnehmer = teilnehmerEintrag.Value;
+            int personIndex = PersonEintrag.Key;
+            Person person = PersonEintrag.Value;
 
-            Anwesenheit.FunktionsTyp? funktion = GetFunktio(worksheet.Cells[teilnehmerIndex, _konfiguration.FunktionSpalte].Value?.ToString());
-            bool anwesend = GetAnwesenheit(worksheet.Cells[teilnehmerIndex, treiningIndex].Value?.ToString());
-            Anwesenheit anwesenheit = new(funktion, teilnehmer, training, anwesend);
+            Anwesenheit.FunktionsTyp? funktion = GetFunktio(worksheet.Cells[personIndex, _konfiguration.FunktionSpalte].Value?.ToString());
+            bool anwesend = GetAnwesenheit(worksheet.Cells[personIndex, aktivitaetIndex].Value?.ToString());
+            Anwesenheit anwesenheit = new(funktion, person, aktivitaet, anwesend);
             return anwesenheit;
         }
 

@@ -4,15 +4,15 @@ namespace BCT.AWK.Converter.Anwesenheitskontrollen
 {
     internal class Anwesenheitskontrolle
     {
-        public Anwesenheitskontrolle(IReadOnlyList<Person> personen, IReadOnlyList<Training> trainings, IReadOnlyList<Anwesenheit> anwesenheiten)
+        public Anwesenheitskontrolle(IReadOnlyList<Person> personen, IReadOnlyList<Aktivitaet> aktivitaeten, IReadOnlyList<Anwesenheit> anwesenheiten)
         {
             Personen = personen;
-            Trainings = trainings;
+            Aktivitaeten = aktivitaeten;
             Anwesenheiten = anwesenheiten;
         }
 
         public IReadOnlyList<Person> Personen { get; }
-        public IReadOnlyList<Training> Trainings { get; }
+        public IReadOnlyList<Aktivitaet> Aktivitaeten { get; }
         public IReadOnlyList<Anwesenheit> Anwesenheiten { get; }
     }
 }

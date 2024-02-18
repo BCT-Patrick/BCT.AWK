@@ -35,20 +35,20 @@ namespace BCT.AWK.Converter.Export.CsvExport
 
         public void WriteZeile(Anwesenheit anwesenheit)
         {
-            _writer.Write(anwesenheit.Teilnehmer.Nummer);
+            _writer.Write(anwesenheit.Person.Nummer);
             _writer.Write(_separator);
             string funktion = anwesenheit.Funktion == Anwesenheit.FunktionsTyp.Leiter ? "Leiter/in" : "Teilnehmer/in";
             _writer.Write(funktion);
             _writer.Write(_separator);
-            _writer.Write(anwesenheit.Training.Datum?.ToString("dd.MM.yyyy"));
+            _writer.Write(anwesenheit.Aktivitaet.Datum?.ToString("dd.MM.yyyy"));
             _writer.Write(_separator);
-            _writer.Write(anwesenheit.Training.Art);
+            _writer.Write(anwesenheit.Aktivitaet.Art);
             _writer.Write(_separator);
-            _writer.Write(anwesenheit.Training.Zeit?.ToString("HH:mm"));
+            _writer.Write(anwesenheit.Aktivitaet.Zeit?.ToString("HH:mm"));
             _writer.Write(_separator);
-            _writer.Write(anwesenheit.Training.Dauer);
+            _writer.Write(anwesenheit.Aktivitaet.Dauer);
             _writer.Write(_separator);
-            _writer.Write(anwesenheit.Training.Ort);
+            _writer.Write(anwesenheit.Aktivitaet.Ort);
 
             _writer.WriteLine();
         }
