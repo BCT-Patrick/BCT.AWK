@@ -1,51 +1,75 @@
 ﻿using BCT.AWK.Converter.Anwesenheitskontrollen;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace BCT.AWK.Converter.Export.CsvExport
 {
-    internal class AktivitaetCsvWriter
+    internal class AktivitaetCsvWriter : ICsvExportWriter
     {
-        private readonly StreamWriter _writer;
-        private readonly string _separator;
+        private string _separator;
 
-        public AktivitaetCsvWriter(StreamWriter writer, string separator)
+        public AktivitaetCsvWriter(string separator)
         {
-            _writer = writer;
+            SetSeparator(separator);
+        }
+
+        public string Bezeichnung => "Aktivitaeten";
+
+        [MemberNotNull(nameof(_separator))]
+        public void SetSeparator(string separator)
+        {
             _separator = separator;
         }
 
-        public void WriteKopfZeile()
+        public bool CanWrite(ExportKonfiguration konfiguration)
         {
-            _writer.Write("Aktivitaetstyp");
-            _writer.Write(_separator);
-            _writer.Write("Datum");
-            _writer.Write(_separator);
-            _writer.Write("Zeit");
-            _writer.Write(_separator);
-            _writer.Write("Dauer");
-            _writer.Write(_separator);
-            _writer.Write("Ort");
-            _writer.Write(_separator);
-            _writer.Write("Fokus");
-
-            _writer.WriteLine();
+            return konfiguration.AktivitaetenExport;
         }
 
-        public void WriteZeile(Aktivitaet aktivitaet)
+        public void WriteKopfZeile(StreamWriter writer)
         {
-            _writer.Write(aktivitaet.Art);
-            _writer.Write(_separator);
-            _writer.Write(aktivitaet.Datum?.ToString("dd.MM.yyyy"));
-            _writer.Write(_separator);
-            _writer.Write(aktivitaet.Zeit?.ToString("HH:mm"));
-            _writer.Write(_separator);
-            _writer.Write(aktivitaet.Dauer);
-            _writer.Write(_separator);
-            _writer.Write(aktivitaet.Ort);
-            _writer.Write(_separator);
-            _writer.Write(aktivitaet.Fokus);
+            writer.Write("Aktivitaetstyp");
+            writer.Write(_separator);
+            writer.Write("Datum");
+            writer.Write(_separator);
+            writer.Write("Zeit");
+            writer.Write(_separator);
+            writer.Write("Dauer");
+            writer.Write(_separator);
+            writer.Write("Ort");
+            writer.Write(_separator);
+            writer.Write("Fokus");
 
-            _writer.WriteLine();
+            writer.WriteLine();
+        }
+
+        public int WriteZeilen(Anwesenheitskontrolle anwesenheitskontrolle, StreamWriter writer)
+        {
+            int exportiert = 0;
+            foreach (Aktivitaet aktivitaet in anwesenheitskontrolle.Aktivitaeten)
+            {
+                WriteZeile(aktivitaet, writer);
+                exportiert++;
+            }
+
+            return exportiert;
+        }
+
+        private void WriteZeile(Aktivitaet aktivitaet, StreamWriter writer)
+        {
+            writer.Write(aktivitaet.Art);
+            writer.Write(_separator);
+            writer.Write(aktivitaet.Datum?.ToString("dd.MM.yyyy"));
+            writer.Write(_separator);
+            writer.Write(aktivitaet.Zeit?.ToString("HH:mm"));
+            writer.Write(_separator);
+            writer.Write(aktivitaet.Dauer);
+            writer.Write(_separator);
+            writer.Write(aktivitaet.Ort);
+            writer.Write(_separator);
+            writer.Write(aktivitaet.Fokus);
+
+            writer.WriteLine();
         }
     }
 }

@@ -56,8 +56,9 @@ namespace BCT.AWK.Converter
                 Console.WriteLine();
 
                 Console.WriteLine("CSV Exportieren");
-                int exportiert = AnwesenheitenExportieren(anwesenheitskontrolle, excelFile, konfiguration.Export);
-                Console.WriteLine($"{exportiert} Anwesenheiten exportiert");
+                List<string> exportResults = AnwesenheitenExportieren(anwesenheitskontrolle, excelFile, konfiguration.Export);
+                Console.WriteLine("Export Resultate");
+                Console.WriteLine(string.Join(Environment.NewLine,exportResults));
             }
             catch (Exception ex)
             {
@@ -115,16 +116,27 @@ namespace BCT.AWK.Converter
 
         private static Anwesenheitskontrolle GetAnwesenheiten(FileInfo excelFile, ImportKonfiguration konfiguration)
         {
-            ExcelImport excelImportRepository = new(konfiguration);
-            Anwesenheitskontrolle anwesenheitskontrolle = excelImportRepository.Laden(excelFile);
+            ExcelImport excelImport = new(konfiguration);
+            Anwesenheitskontrolle anwesenheitskontrolle = excelImport.Laden(excelFile);
             return anwesenheitskontrolle;
         }
 
-        private static int AnwesenheitenExportieren(Anwesenheitskontrolle anwesenheitskontrolle, FileInfo excelFile, ExportKonfiguration konfiguration)
+        private static List<string> AnwesenheitenExportieren(Anwesenheitskontrolle anwesenheitskontrolle, FileInfo excelFile, ExportKonfiguration konfiguration)
         {
-            CsvExport csvExportRepository = new(konfiguration);
-            int exportiert = csvExportRepository.Export(anwesenheitskontrolle, excelFile);
-            return exportiert;
+            CsvExport csvExport = BuildCsvExport(konfiguration);
+            List<string> exportResults = csvExport.Export(anwesenheitskontrolle, excelFile);
+            return exportResults;
+        }
+
+        private static CsvExport BuildCsvExport(ExportKonfiguration konfiguration)
+        {
+            string separator = konfiguration.Separator;
+            AnwesenheitCsvWriter anwesenheitCsvWriter = new(separator);
+            PersonCsvWriter personCsvWriter = new(separator);
+            AktivitaetCsvWriter aktivitaetCsvWriter = new(separator);
+
+            List<ICsvExportWriter> csvExportWriters = new() { anwesenheitCsvWriter, personCsvWriter, aktivitaetCsvWriter};
+            return new(konfiguration, csvExportWriters);
         }
     }
 }

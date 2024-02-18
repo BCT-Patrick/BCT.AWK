@@ -1,56 +1,83 @@
 ﻿using BCT.AWK.Converter.Anwesenheitskontrollen;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace BCT.AWK.Converter.Export.CsvExport
 {
-    internal class AnwesenheitCsvWriter
+    internal class AnwesenheitCsvWriter : ICsvExportWriter
     {
-        private readonly StreamWriter _writer;
-        private readonly string _separator;
+        private string _separator;
 
-        public AnwesenheitCsvWriter(StreamWriter writer, string separator)
+        public AnwesenheitCsvWriter(string separator)
         {
-            _writer = writer;
+            SetSeparator(separator);
+        }
+
+        public string Bezeichnung => "Anwesenheiten";
+
+        [MemberNotNull(nameof(_separator))]
+        public void SetSeparator(string separator)
+        {
             _separator = separator;
         }
 
-        public void WriteKopfZeile()
+        public bool CanWrite(ExportKonfiguration konfiguration)
         {
-            _writer.Write("Personennummer");
-            _writer.Write(_separator);
-            _writer.Write("Funktion");
-            _writer.Write(_separator);
-            _writer.Write("Datum");
-            _writer.Write(_separator);
-            _writer.Write("Aktivitaetstyp");
-            _writer.Write(_separator);
-            _writer.Write("Zeit");
-            _writer.Write(_separator);
-            _writer.Write("Dauer");
-            _writer.Write(_separator);
-            _writer.Write("Ort");
-
-            _writer.WriteLine();
+            return konfiguration.AnwesenheitenExport;
         }
 
-        public void WriteZeile(Anwesenheit anwesenheit)
+        public void WriteKopfZeile(StreamWriter writer)
         {
-            _writer.Write(anwesenheit.Person.Nummer);
-            _writer.Write(_separator);
-            string funktion = anwesenheit.Funktion == Anwesenheit.FunktionsTyp.Leiter ? "Leiter/in" : "Teilnehmer/in";
-            _writer.Write(funktion);
-            _writer.Write(_separator);
-            _writer.Write(anwesenheit.Aktivitaet.Datum?.ToString("dd.MM.yyyy"));
-            _writer.Write(_separator);
-            _writer.Write(anwesenheit.Aktivitaet.Art);
-            _writer.Write(_separator);
-            _writer.Write(anwesenheit.Aktivitaet.Zeit?.ToString("HH:mm"));
-            _writer.Write(_separator);
-            _writer.Write(anwesenheit.Aktivitaet.Dauer);
-            _writer.Write(_separator);
-            _writer.Write(anwesenheit.Aktivitaet.Ort);
+            writer.Write("Personennummer");
+            writer.Write(_separator);
+            writer.Write("Funktion");
+            writer.Write(_separator);
+            writer.Write("Datum");
+            writer.Write(_separator);
+            writer.Write("Aktivitaetstyp");
+            writer.Write(_separator);
+            writer.Write("Zeit");
+            writer.Write(_separator);
+            writer.Write("Dauer");
+            writer.Write(_separator);
+            writer.Write("Ort");
 
-            _writer.WriteLine();
+            writer.WriteLine();
+        }
+
+        public int WriteZeilen(Anwesenheitskontrolle anwesenheitskontrolle, StreamWriter writer)
+        {
+            int exportiert = 0;
+            foreach (Anwesenheit anwesenheit in anwesenheitskontrolle.Anwesenheiten)
+            {
+                if (anwesenheit.Anwesend)
+                {
+                    WriteZeile(anwesenheit, writer);
+                    exportiert++;
+                }
+            }
+
+            return exportiert;
+        }
+
+        private void WriteZeile(Anwesenheit anwesenheit, StreamWriter writer)
+        {
+            writer.Write(anwesenheit.Person.Nummer);
+            writer.Write(_separator);
+            string funktion = anwesenheit.Funktion == Anwesenheit.FunktionsTyp.Leiter ? "Leiter/in" : "Teilnehmer/in";
+            writer.Write(funktion);
+            writer.Write(_separator);
+            writer.Write(anwesenheit.Aktivitaet.Datum?.ToString("dd.MM.yyyy"));
+            writer.Write(_separator);
+            writer.Write(anwesenheit.Aktivitaet.Art);
+            writer.Write(_separator);
+            writer.Write(anwesenheit.Aktivitaet.Zeit?.ToString("HH:mm"));
+            writer.Write(_separator);
+            writer.Write(anwesenheit.Aktivitaet.Dauer);
+            writer.Write(_separator);
+            writer.Write(anwesenheit.Aktivitaet.Ort);
+
+            writer.WriteLine();
         }
     }
 }

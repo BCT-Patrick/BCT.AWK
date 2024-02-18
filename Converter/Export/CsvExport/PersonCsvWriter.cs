@@ -1,83 +1,107 @@
 ﻿using BCT.AWK.Converter.Anwesenheitskontrollen;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace BCT.AWK.Converter.Export.CsvExport
 {
-    internal class PersonCsvWriter
+    internal class PersonCsvWriter : ICsvExportWriter
     {
-        private readonly StreamWriter _writer;
-        private readonly string _separator;
+        private string _separator;
 
-        public PersonCsvWriter(StreamWriter writer, string separator)
+        public PersonCsvWriter(string separator)
         {
-            _writer = writer;
+            SetSeparator(separator);
+        }
+
+        public string Bezeichnung => "Personen";
+
+        [MemberNotNull(nameof(_separator))]
+        public void SetSeparator(string separator)
+        {
             _separator = separator;
         }
 
-        public void WriteKopfZeile()
+        public bool CanWrite(ExportKonfiguration konfiguration)
         {
-            _writer.Write("Personennummer");
-            _writer.Write(_separator);
-            _writer.Write("Name");
-            _writer.Write(_separator);
-            _writer.Write("Vorname");
-            _writer.Write(_separator);
-            _writer.Write("Geburtsdatum");
-            _writer.Write(_separator);
-            _writer.Write("Geschlecht");
-            _writer.Write(_separator);
-            _writer.Write("AHV_NR");
-            _writer.Write(_separator);
-            _writer.Write("PEID");
-            _writer.Write(_separator);
-            _writer.Write("Nationalitaet");
-            _writer.Write(_separator);
-            _writer.Write("Muttersprache");
-            _writer.Write(_separator);
-            _writer.Write("Strasse");
-            _writer.Write(_separator);
-            _writer.Write("Hausnummer");
-            _writer.Write(_separator);
-            _writer.Write("PLZ");
-            _writer.Write(_separator);
-            _writer.Write("Ort");
-            _writer.Write(_separator);
-            _writer.Write("Land");
-
-            _writer.WriteLine();
+            return konfiguration.PersonenExport;
         }
 
-        public void WriteZeile(Person person)
+        public void WriteKopfZeile(StreamWriter writer)
         {
-            _writer.Write(person.Nummer);
-            _writer.Write(_separator);
-            _writer.Write(person.NachName);
-            _writer.Write(_separator);
-            _writer.Write(person.VorName);
-            _writer.Write(_separator);
-            _writer.Write(person.Geburtstag?.ToString("dd.MM.yyyy"));
-            _writer.Write(_separator);
-            _writer.Write(ToString(person.Geschlecht));
-            _writer.Write(_separator);
-            _writer.Write(person.AhvNr);
-            _writer.Write(_separator);
-            _writer.Write(person.PeId);
-            _writer.Write(_separator);
-            _writer.Write(ToString(person.Nationalitaet));
-            _writer.Write(_separator);
-            _writer.Write(ToString(person.Muttersprache));
-            _writer.Write(_separator);
-            _writer.Write(person.Strasse);
-            _writer.Write(_separator);
-            _writer.Write(person.Hausnummer);
-            _writer.Write(_separator);
-            _writer.Write(person.Plz);
-            _writer.Write(_separator);
-            _writer.Write(person.Ort);
-            _writer.Write(_separator);
-            _writer.Write(person.Land);
+            writer.Write("Personennummer");
+            writer.Write(_separator);
+            writer.Write("Name");
+            writer.Write(_separator);
+            writer.Write("Vorname");
+            writer.Write(_separator);
+            writer.Write("Geburtsdatum");
+            writer.Write(_separator);
+            writer.Write("Geschlecht");
+            writer.Write(_separator);
+            writer.Write("AHV_NR");
+            writer.Write(_separator);
+            writer.Write("PEID");
+            writer.Write(_separator);
+            writer.Write("Nationalitaet");
+            writer.Write(_separator);
+            writer.Write("Muttersprache");
+            writer.Write(_separator);
+            writer.Write("Strasse");
+            writer.Write(_separator);
+            writer.Write("Hausnummer");
+            writer.Write(_separator);
+            writer.Write("PLZ");
+            writer.Write(_separator);
+            writer.Write("Ort");
+            writer.Write(_separator);
+            writer.Write("Land");
 
-            _writer.WriteLine();
+            writer.WriteLine();
+        }
+
+        public int WriteZeilen(Anwesenheitskontrolle anwesenheitskontrolle, StreamWriter writer)
+        {
+            int exportiert = 0;
+            foreach (Person person in anwesenheitskontrolle.Personen)
+            {
+                WriteZeile(person, writer);
+                exportiert++;
+            }
+
+            return exportiert;
+        }
+
+        private void WriteZeile(Person person, StreamWriter writer)
+        {
+            writer.Write(person.Nummer);
+            writer.Write(_separator);
+            writer.Write(person.NachName);
+            writer.Write(_separator);
+            writer.Write(person.VorName);
+            writer.Write(_separator);
+            writer.Write(person.Geburtstag?.ToString("dd.MM.yyyy"));
+            writer.Write(_separator);
+            writer.Write(ToString(person.Geschlecht));
+            writer.Write(_separator);
+            writer.Write(person.AhvNr);
+            writer.Write(_separator);
+            writer.Write(person.PeId);
+            writer.Write(_separator);
+            writer.Write(ToString(person.Nationalitaet));
+            writer.Write(_separator);
+            writer.Write(ToString(person.Muttersprache));
+            writer.Write(_separator);
+            writer.Write(person.Strasse);
+            writer.Write(_separator);
+            writer.Write(person.Hausnummer);
+            writer.Write(_separator);
+            writer.Write(person.Plz);
+            writer.Write(_separator);
+            writer.Write(person.Ort);
+            writer.Write(_separator);
+            writer.Write(person.Land);
+
+            writer.WriteLine();
         }
 
         private static string? ToString(Person.GeschlechtTyp? geschlecht)
