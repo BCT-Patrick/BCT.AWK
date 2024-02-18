@@ -1,11 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BCT.AWK.Converter.Import.ExcelImport;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BCT.AWK.Converter.Import.AnwesenheitImport;
 using BCT.AWK.Converter.Anwesenheitskontrollen;
 using FluentAssertions;
 
@@ -71,16 +65,16 @@ namespace BCT.AWK.Converter.Import.ExcelImport
         {
             List<Aktivitaet> aktivitaeten = new()
             {
-                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,18), new(20,0,0), 90, null),
-                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,19), new(20,0,0), 90, null),
-                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,25), new(20,0,0), 90, null),
-                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,1), new(20,0,0), 90, null),
-                new(Aktivitaet.AktivitaetsTyp.Wettkampf, new(2022,9,8), null, null, null),
-                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,15), new(20,0,0), 90, null),
-                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,22), new(20,0,0), 90, null),
-                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,29), new(20,0,0), 90, null),
-                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,10,6), new(20,0,0), 90, null),
-                new(Aktivitaet.AktivitaetsTyp.Wettkampf, new(2022,10,13), null, null, null)
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,18), new(20,0,0), 90, "Lichtensteig", "Technick"),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,19), new(20,0,0), 90, "Lichtensteig", "Kondition"),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,8,25), new(20,0,0), 90, "Lichtensteig", "Wettkampf"),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,2), new(20,0,0), 90, "Lichtensteig", "Technick"),
+                new(Aktivitaet.AktivitaetsTyp.Wettkampf, new(2022,9,10), null, null, "St. Gallen", null),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,15), new(20,0,0), 90, "Lichtensteig", "Kondition"),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,23), new(20,0,0), 90, "Lichtensteig", "Wettkampf"),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,9,29), new(20,0,0), 90, "Lichtensteig", "Technick"),
+                new(Aktivitaet.AktivitaetsTyp.Training, new(2022,10,7), new(20,0,0), 90, "Lichtensteig", "Kondition"),
+                new(Aktivitaet.AktivitaetsTyp.Wettkampf, new(2022,10,15), null, null, "St. Gallen", null)
             };
 
             return aktivitaeten;

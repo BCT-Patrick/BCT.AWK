@@ -3,7 +3,7 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 
-namespace BCT.AWK.Converter.Import.AnwesenheitImport
+namespace BCT.AWK.Converter.Import.ExcelImport
 {
     internal class ExcelImportAnwesenheit
     {

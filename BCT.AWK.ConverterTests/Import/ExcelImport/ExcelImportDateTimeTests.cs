@@ -1,10 +1,9 @@
-﻿using BCT.AWK.Converter.Import.ExcelImport;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
 
-namespace BCT.AWK.ConverterTests.Import.ExcelImport
+namespace BCT.AWK.Converter.Import.ExcelImport
 {
     [TestClass]
     public class ExcelImportDateTimeTests
@@ -42,7 +41,7 @@ namespace BCT.AWK.ConverterTests.Import.ExcelImport
         [TestMethod]
         public void GetDate_FromString()
         {
-            string value = new DateTime(2022, 7, 23,0,0,0, DateTimeKind.Unspecified).ToString(CultureInfo.CurrentCulture);
+            string value = new DateTime(2022, 7, 23, 0, 0, 0, DateTimeKind.Unspecified).ToString(CultureInfo.CurrentCulture);
 
             DateOnly? result = ExcelImportDateTime.GetDate(value);
 
@@ -65,7 +64,7 @@ namespace BCT.AWK.ConverterTests.Import.ExcelImport
 
             TimeOnly? result = ExcelImportDateTime.GetTime(value);
 
-            TimeOnly ExpectedResult = new(15,44,51);
+            TimeOnly ExpectedResult = new(15, 44, 51);
             result.Should().Be(ExpectedResult);
         }
 

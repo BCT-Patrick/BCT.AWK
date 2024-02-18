@@ -4,7 +4,7 @@ namespace BCT.AWK.Converter.Import
 {
     internal class ImportKonfigurationPerson
     {
-        public int ErstePersonZeile { get; set; } = 9;
+        public int ErstePersonZeile { get; set; } = 10;
         public int LetztePersonZeile { get; set; } = 50;
 
         public int NummerSpalte { get; set; } = 1;
