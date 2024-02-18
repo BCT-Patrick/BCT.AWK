@@ -18,6 +18,7 @@ namespace BCT.AWK.Converter.Export.CsvExport
         {
             int anwesenheitenExport = 0;
             int personenExport = 0;
+            int aktivitaetenExport = 0;
 
             if (_konfiguration.AnwesenheitenExport)
             {
@@ -29,7 +30,12 @@ namespace BCT.AWK.Converter.Export.CsvExport
                 personenExport = ExportPersonen(anwesenheitskontrolle.Personen, excelFile);
             }
 
-            return anwesenheitenExport + personenExport;
+            if (_konfiguration.AnwesenheitenExport)
+            {
+                aktivitaetenExport = ExportAktivitaeten(anwesenheitskontrolle.Aktivitaeten, excelFile);
+            }
+
+            return anwesenheitenExport + personenExport + aktivitaetenExport;
         }
 
         public int ExportAnwesenheiten(IEnumerable<Anwesenheit> anwesenheiten, FileInfo excelFile)
@@ -84,6 +90,33 @@ namespace BCT.AWK.Converter.Export.CsvExport
             foreach (Person person in personen)
             {
                 csvWriter.WriteZeile(person);
+                exportiert++;
+            }
+            return exportiert;
+        }
+
+        public int ExportAktivitaeten(IEnumerable<Aktivitaet> aktivitaeten, FileInfo excelFile)
+        {
+            DateTime jetzt = DateTime.Now;
+            string zeitstempel = jetzt.ToString(_konfiguration.FileZeitstempelFormat);
+            string fileName = $"{excelFile.FullName}_Aktivitaeten_{zeitstempel}{_konfiguration.FileExtension}";
+
+            FileStreamOptions options = new()
+            {
+                Mode = FileMode.CreateNew,
+                Access = FileAccess.ReadWrite,
+                Share = FileShare.Read
+            };
+
+            using StreamWriter writer = new(fileName, options);
+            AktivitaetCsvWriter csvWriter = new(writer, _konfiguration.Separator);
+
+            csvWriter.WriteKopfZeile();
+
+            int exportiert = 0;
+            foreach (Aktivitaet aktivitaet in aktivitaeten)
+            {
+                csvWriter.WriteZeile(aktivitaet);
                 exportiert++;
             }
             return exportiert;

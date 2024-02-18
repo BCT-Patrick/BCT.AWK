@@ -40,7 +40,7 @@ namespace BCT.AWK.Converter.Export.CsvExport
         [TestMethod()]
         public void WriteZeileTest()
         {
-            Aktivitaet aktivitaet = new(Aktivitaet.AktivitaetsTyp.Training, new(2021, 6, 15), new(19, 30), 1.5, "Ort");
+            Aktivitaet aktivitaet = new(Aktivitaet.AktivitaetsTyp.Training, new(2021, 6, 15), new(19, 30), 1.5, "Ort", "Fokus");
  
             _aktivitaetCsvWriter.WriteZeile(aktivitaet);
 

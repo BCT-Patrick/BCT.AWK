@@ -37,8 +37,9 @@ namespace BCT.AWK.Converter.Import.ExcelImport
             TimeOnly? zeit = ExcelImportDateTime.GetTime(worksheet.Cells[_konfiguration.ZeitZeile, treiningIndex].Value);
             double? dauer = (double?)worksheet.Cells[_konfiguration.DauerZeile, treiningIndex].Value;
             string? ort = worksheet.Cells[_konfiguration.OrtZeile, treiningIndex].Value?.ToString();
+            string? fokus = worksheet.Cells[_konfiguration.FokusZeile, treiningIndex].Value?.ToString();
 
-            Aktivitaet aktivitaet = new(art, datum, zeit, dauer, ort);
+            Aktivitaet aktivitaet = new(art, datum, zeit, dauer, ort, fokus);
             return aktivitaet;
         }
 

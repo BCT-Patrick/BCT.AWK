@@ -12,6 +12,7 @@ namespace BCT.AWK.Converter.Import
         public int ZeitZeile { get; set; } = 4;
         public int DauerZeile { get; set; } = 5;
         public int OrtZeile { get; set; } = 6;
+        public int FokusZeile { get; set; } = 7;
 
         public override string ToString()
         {
@@ -22,14 +23,18 @@ namespace BCT.AWK.Converter.Import
             string zeitZeile = $"{nameof(ZeitZeile)}= {ZeitZeile}";
             string dauerZeile = $"{nameof(DauerZeile)}= {DauerZeile}";
             string ortZeile = $"{nameof(OrtZeile)}= {OrtZeile}";
+            string fokusZeile = $"{nameof(FokusZeile)}= {FokusZeile}";
 
             string separator = $"{Environment.NewLine}\t\t";
             string s = string.Join(separator, "Aktivitaet Konfiguration:",
                 ersteAktivitaetSpalte, 
                 letzteAktivitaetSpalte, 
-                artZeile, datumZeile, 
-                zeitZeile, dauerZeile,
-                ortZeile);
+                artZeile,
+                datumZeile, 
+                zeitZeile, 
+                dauerZeile,
+                ortZeile,
+                fokusZeile);
             return s;
         }
     }
